@@ -1,0 +1,329 @@
+\documentclass[UTF8]{ctexart}
+
+\renewcommand{\contentsname}{Content}
+
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+
+% \usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+% \usepackage[noend]{algpseudocode}
+% \usepackage{algpseudocode}
+% \algtext*{EndWhile}% Remove "end while" text
+
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3
+}
+\geometry{left=3.18cm,right=3.18cm,top=2.55cm,bottom=2.25cm}
+\pagestyle{plain}   
+
+\usepackage{setspace}
+\date{}
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {% \begin{breakablealgorithm}
+   \begin{center}
+     \refstepcounter{algorithm}% New algorithm
+     \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+     \renewcommand{\caption}[2][\relax]{% Make a new \caption
+       {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+       \ifx\relax##1\relax % #1 is \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+       \else % #1 is not \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+       \fi
+       \kern2pt\hrule\kern2pt
+     }
+  }{% \end{breakablealgorithm}
+     \kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+   \end{center}
+  }
+\makeatother
+
+
+\begin{document}
+
+\begin{center}
+    \quad \\
+\end{center}
+\vskip 3.5cm
+
+\begin{center}
+    \quad \\
+    \quad \\
+    % \huge  assignment1
+    \fontsize{36pt}{27pt}\selectfont \textbf{assignment2}
+    \quad \\
+\end{center}
+\vskip 1.0cm
+
+\begin{center}
+    % \includegraphics[scale=0.6]{../img/logo.png}
+    \fontsize{27pt}{27pt}\selectfont \textbf{Individual report for bth004}
+\end{center}
+\vskip 4.5cm
+
+\begin{quotation}
+    % \fontsize{27}{15}
+    \fontsize{27}{15}\selectfont
+    \doublespacing
+    \par\setlength\parindent{6.5em}
+    \quad
+
+    Name: {\qquad\qquad\qquad YuKi \qquad\qquad\qquad\qquad }
+
+    Student ID: {\qquad\qquad xxxxxxxxxxxxx \qquad\qquad\qquad}
+
+    Date: : {\qquad\qquad\qquad  December 15, 2023 \qquad\qquad\qquad}
+
+    \vskip 1cm
+    \centering
+\end{quotation}
+
+\newpage
+\tableofcontents
+
+\newpage
+\section{Implementation}
+\subsection{Bubble Sort}
+It repeatedly steps through the input list element by element, 
+while element of adjacent elements are compared 
+if a reverse order is found, swaps them. 
+And repeating until no swaps are needed, 
+that means the list has become fully sorted. 
+
+Step-by-step looking:
+\begin{enumerate}
+    \item Compare adjacent elements,
+    if a reverse order is found, swap them.
+    \item Repeat the step 1 for each pair of adjacent elements.
+    \item After step 2 is completed, the final element will be sorted. 
+    \item If none of the pairs of elements in the above steps need to be swapped, 
+    the list has become fully sorted.
+    Otherwise, repeat the above steps for all elements except those that are already sorted.
+\end{enumerate}
+
+\subsection{Merge Sort}
+It continuously divides the input list into sublists, 
+then merges the sorted sublists in order until an ordered list is formed.
+
+Step-by-step looking:
+\begin{enumerate}
+    \item Divide the unsorted list into $n$ sublists, 
+    each containing one element (a list of one element is considered sorted).
+    \item Repeatedly merge sublists to produce new sorted sublists until 
+    there is only one sublist remaining. 
+    This will be the sorted list.
+\end{enumerate}
+\newpage
+\newgeometry{left=3.5cm,right=3.5cm,top=1.3cm,bottom=1.3cm}
+
+\section{Pseudo Code}
+\subsection{Bubble Sort}
+\begin{breakablealgorithm}
+    \caption{Bubble Sort}
+    \begin{algorithmic}[1]
+        % \REQUIRE Input list $arr$
+        % \ENSURE Sorted list $arr$
+        \STATE \textbf{Input} Input list $arr$ 
+        
+        \FOR {$i \gets 0$; $i < n$; $i++$ }
+        \STATE $flag\_noSwap \gets true$
+        \FOR {$j \gets 0$; $j < n - i - 1$; $j++$ }
+        \IF {$arr[j]$ $>$ $arr[j+1]$}
+        \STATE \textit{swap} ($arr[j]$, $arr[j+1]$)
+        \STATE $flag\_noSwap \gets false$
+        \ENDIF
+        \ENDFOR
+        \IF {$flag\_noSwap$}
+        \STATE break
+        \ENDIF
+        \ENDFOR
+        \STATE \textbf{Output} Sorted list $arr$
+    \end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{Merge Sort}
+\begin{breakablealgorithm}
+    \caption{Merge Sort}
+    \begin{algorithmic}[1]
+        % \REQUIRE Input list $arr$
+        % \ENSURE Sorted list $arr$
+        \STATE \textbf{Input} Input list $arr$ 
+        \STATE \textbf{function} \textit{merge}($arr_{left}, arr_{right}$)    
+        % \STATE \quad \textbf{while} {$i < len(arr_{left}) \&\& j < len(arr_{right})$} \textbf{do}
+        \STATE \quad \textbf{while} {$arr_{left}$ not empty $\&\&$ $arr_{right}$ not empty} \textbf{do}
+        \STATE \quad \quad \textbf{if} {$arr_{left}[0] < arr_{right}[0]$} \textbf{then}
+        \STATE \quad \quad \quad append $arr_{left}[0]$ to $arr$
+        \STATE \quad \quad \quad remove $arr_{left}[0]$ from $arr_{left}$
+        % \STATE \quad \quad \quad $arr.append(arr_{left}[0])$
+        % \STATE \quad \quad \quad $arr_{left}.remove(arr_{left}[0])$
+        \STATE \quad \quad \textbf{else}
+        \STATE \quad \quad \quad append $arr_{right}[0]$ to $arr$
+        \STATE \quad \quad \quad remove $arr_{right}[0]$ from $arr_{right}$
+        \STATE \quad \quad \textbf{end if}
+        \STATE \quad \textbf{end while}
+        \STATE \quad append remaining elements in $arr_{left}$ to $arr$ in order
+        \STATE \quad append remaining elements in $arr_{right}$ to $arr$ in order
+        % \STATE \quad $arr \gets merge(arr_{left}, arr_{right} )$
+        \STATE \quad \textbf{return} $arr$
+        % \STATE
+        \STATE \textbf{function} \textit{mergeSort}($arr$)   
+        \STATE \quad \textbf{if} {$n > 1$} \textbf{then}
+        \STATE \quad \quad {$mid \gets \lfloor len(arr) \rfloor$}
+        \STATE \quad \quad $arr_{left} \gets mergeSort(arr[:mid])$
+        \STATE \quad \quad $arr_{right} \gets mergeSort(arr[mid:])$
+        \STATE \quad \quad $arr \gets merge(arr_{left}, arr_{right})$
+
+        \STATE \quad \textbf{end if}
+        % \STATE \quad \textbf{return} $merge(arr_{left}, arr_{right} )$
+        
+        % \STATE  
+        \STATE \textit{mergeSort}($arr$) 
+        \STATE \textbf{Output} Sorted list $arr$
+    \end{algorithmic}
+\end{breakablealgorithm}
+\restoregeometry
+
+\newpage
+
+\section{Theoretical Analysis}
+\label{TheoreticalAnalysis}
+Set that the length of the input list $arr$ is $n$. For the requirement in this assignment, the basic operation
+is “comparing two numbers”.
+\subsection{Bubble Sort}
+In the best-case, when the list is already sorted, 
+only the first $for$ loop needs to be executed.
+So the amount of basic operation is $n$.
+
+In the worst-case, when the array is in completely reverse order, 
+two levels of $for$ loop needs to be executed, 
+and every pair of elements need to be compared.
+So the amount of basic operation is $n(n-1)/2$.
+
+In the average-case, 
+tow levels of $for$ loop needs to be executed, 
+and most pairs of elements need to be compared.
+So the amount of basic operation is order of magnitude of $n^2$.
+
+So, the bubble sort algorithm's best time complexity is $O(n)$, average/worst time complexity is $O(n^2)$.
+
+\subsection{Merge Sort}
+Through the recursion formula, we can know time complexity of merge sort
+(the time complexity of merging sublists is O(n)):
+
+\[ T(n) = 2T(\frac{n}{2}) + O(n)\]
+
+We can use $Master Theorem$ to calculate 
+
+\[ T(n) = O(nlog_2(n))\]
+
+% \newpage
+
+\section{Practical Analysis}
+\label{PracticalAnalysis}
+\subsection{Test data of type of Int from $10^1$ to $10^5$}
+\includegraphics[scale=0.85]{img/Int.png}
+\subsection{Test data of type of Float from $10^1$ to $10^5$}
+\includegraphics[scale=0.88]{img/Float.png}
+
+\section{Question Answer}
+\textbf{Question}: 
+
+At what input size do you consider the time 
+required for initialization to be negligible 
+in relation to the total running time of the algorithm?\\
+
+\textbf{Answer}:
+
+Whether the initialization time 
+is negligible relative to the total running time of the algorithm 
+depends on several factors.
+
+In this assignment, for an input sequence of length $n$, $n$ operations are required. 
+It means the time complexity of initialization is $O(n)$.
+And the time complexity of bubble sort is $O(n^2)$,
+the time complexity of merge sort is $O(nlog_2(n))$.
+
+Comparing $O(n)$, $O(n^2)$ and $O(nlog_2(n))$, 
+we can think that when $n$ is relatively small, 
+the difference between $O(n)$, $O(n^2)$ and $O(nlog_2(n))$ is not big, 
+and the time to initialize the data needs to be considered.
+But when $n$ is large, $O(n)$ is much smaller than $O(n^2)$ and $O(nlog_2(n))$,
+the time to initialize the data can be negligible.
+
+In the 
+\hyperref[PracticalAnalysis]{\textit{4 Practical Analysis}}(in my PC), 
+we can see when the magnitude of the data comes to $10^5$, the initialization time is 
+dozens or even hundreds of times smaller than the time of sorting. 
+So with this sample, we could consider the time required for initialization to be negligible
+in relation to the total running time of the algorithm.
+\newpage
+
+\section{Comparison Of Theoretical And Practical Analysis}
+\subsection{Bubble Sort}
+In
+\hyperref[TheoreticalAnalysis]{\textit{3 Theoretical Analysis}}, 
+we can see the time complexity of bubble sort is $O(n^2)$.
+
+In
+\hyperref[PracticalAnalysis]{\textit{4 Practical Analysis}}, 
+we can see the  CPU time of bubble sort increases rapidly after $n$ becomes $10^3$, 
+for type of Int,
+\[ Time(10^5)=426s = 106 \cdot Time(10^4)= 106 \times 4s =  10^4 \cdot Time(10^3)= 10^4 \cdot 0.046875s \]
+\noindent for type of Float,
+\[ Time(10^5)=635.5469s = 107 \cdot Time(10^4)= 107 \times 5.9375s =  10^4 \cdot Time(10^3)= 10^4 \cdot 0.0469s \]
+This is perfectly consistent with $O(n^2)$ in the theoretical analysis.
+
+\subsection{Merge Sort}
+In
+\hyperref[TheoreticalAnalysis]{\textit{3 Theoretical Analysis}}, 
+we can see the time complexity of merge sort is $O(nlog_2(n))$.
+
+In
+\hyperref[PracticalAnalysis]{\textit{4 Practical Analysis}}, 
+\noindent the CPU time of merge sort grows very slowly, but grows very fast after $n$ becomes $10^4$,
+for type of Int,
+\[ Time(10^5) = 0.25s = 16 \cdot Time(10^4) = 16 \cdot  0.015625s  \]
+\noindent for type of Float,
+\[ Time(10^5) = 0.3125s = 10 \cdot Time(10^4) = 10 \times  0.03125s  \]
+\noindent And,
+\[ 10^5 \cdot log_2(10^5) \div 10^4 \cdot log_2(10^4) = 12.5 \]
+This is perfectly consistent with $O(nlog_2(n))$ in the theoretical analysis.
+
+\newpage
+
+\section{Python Code}
+
+\subsection{Bubble Sort}
+\lstinputlisting[language=Python]{code/bubbleSort.py}
+
+\subsection{Merge Sort}
+\lstinputlisting[language=Python]{code/mergeSort.py}
+
+\subsection{Sort Test}
+Code for implementing a comparison of bubble sort algorithm and merge sort algorithm.
+\lstinputlisting[language=Python]{code/testSort.py}
+
+\end{document}
